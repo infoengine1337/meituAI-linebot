@@ -1,1 +1,3 @@
-# meituAI-linebot
+# AIイラストメーカーLINEボット
+
+AIイラストメーカーのLINEボットのソースコードです
