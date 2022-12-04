@@ -14,7 +14,7 @@ app = Flask(__name__)
 # get environmental value from heroku
 ACCESS_TOKEN = os.environ["ACCESS_TOKEN"]
 CHANNEL_SECRET = os.environ["CHANNEL_SECRET"]
-IMGBB_API = os.environ["IMGBB_API"]
+FREEIMAGE_API = os.environ["FREEIMAGE_API"]
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
@@ -82,13 +82,15 @@ def handle_message(event):
     image_b64_after = base64.b64decode(resp2.json()["media_info_list"][0]["media_data"])
 
     params = {
-        "key": IMGBB_API,
-        "image": base64.b64encode(image_b64_after)
+        "key": FREEIMAGE_API,
+        "source": base64.b64encode(image_b64_after)
     }
 
-    resp1 = requests.post("https://api.imgbb.com/1/upload", data=params).json()
-    main_url = resp1["data"]["url"]
-    thumb_url = resp1["data"]["thumb"]["url"]
+    resp1 = requests.post("https://freeimage.host/api/1/upload", data=params).json()
+
+    print(resp1)
+    main_url = resp1["image"]["url"]
+    thumb_url = resp1["image"]["thumb"]["url"]
 
     image_message = ImageSendMessage(
         original_content_url=main_url,
