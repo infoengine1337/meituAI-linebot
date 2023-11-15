@@ -1,3 +1,4 @@
 flask
 line-bot-sdk
 requests
+aiohttp>=3.8.6 # not directly required, pinned by Snyk to avoid a vulnerability
